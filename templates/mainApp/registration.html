@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<h3> Register users </h3>
+
+<h3 class='text-center'> Регистрация нового пользователя </h3>
+<div class='col-sm-8 col-sm-offset-2'>
+    <hr>
+    <form action='' method='POST'>
+        {{ form|crispy }}
+        {% csrf_token %}
+        <input type='submit' class='btn btn-success btn-block' value='Зарегестрироваться'>
+    </form>
+</div>

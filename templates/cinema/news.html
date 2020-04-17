@@ -1,0 +1,42 @@
+{% extends 'movie/movies.html' %}
+{% load static %}
+{% block news %}
+    {% csrf_token %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+
+                {% for inform in news_list %}
+
+                    <div class="col-md-10" align="center">
+                        <div class="card mb-1 shadow-sm">
+
+                            {#                        <img src="#" class="img-fluid" align="center">#}
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em"> {{ inform.name }}</text>
+                            <div class="card-body">
+                                <p class="card-text"> {{ inform.text }} </p>
+                                <p class="card-text"> {{ inform.date_info }} </p>
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-secondary" href="#">
+                                    публикация {{ inform.publication }} года
+
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock news %}
+

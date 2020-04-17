@@ -1,0 +1,156 @@
+<!doctype html>
+{% load static %}
+{% csrf_token %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> KinoCMS </title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css' %}">
+
+</head>
+<body>
+<header>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+
+        <iframe name="СквознойБаннерШапка" src="//https://www.ukr.net/" width="100%" height="100%" id="if027081"
+                marginwidth="0"
+                marginheight="0" frameborder="0" vspace="0" hspace="0" scrolling="no"></iframe>
+
+
+    </div>
+
+
+    </div>
+
+    <div class="brand-head-cont brand-head-big" style="transform: translateX(-50%) scale(0.672);">
+
+        <div class="head"></div>
+
+    </div>
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Фильмы онлайн и не только, для всей семьи.</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            {% if not request.user.is_authenticated %}
+                <a class="btn btn-outline-primary" href="{% url 'login' %}">Вход</a>
+                <a class="btn btn-outline-primary" href="{% url 'registration' %}">Регистрация</a>
+            {% else %}
+                <a class='p-2 text-dark'> Здравствуйте, {{ request.user }}</a>
+                <a class="btn btn-outline-primary" href="{% url 'logout' %}">Выход</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <a href="#" class="h1 align-content-center ">Горячие Новинки Кино</a>
+
+            <p>
+                <a href="{% url 'placard' %}" class="btn btn-primary my-2">Афиша</a>
+                <a href="#" class="btn btn-secondary my-2">Расписание</a>
+                <a href="#" class="btn btn-secondary my-2">Скоро</a>
+                <a href="{% url 'cinema' %}" class="btn btn-secondary my-2">Кинотеатры</a>
+                <a href="#" class="btn btn-secondary my-2">Акции</a>
+            </p>
+        </div>
+    </section>
+
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                {% for movie in movie_list %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                            <div class="body">
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em"> {{ movie.title }}</text>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"> {{ movie.description|truncatechars_html:200 }} </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+
+                                        <a href="{{ movie.get_absolute_url }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Бронировать </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"> {{ movie.price_per_film }}
+                                            UAH
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    {% block film %} {% endblock film %}
+    {% block activemovies %} {% endblock activemovies %}
+    {% block cinemas %} {% endblock cinemas %}
+    {% block news %} {% endblock news %}
+
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+
+        <div style="">
+
+            <p>У Вас выдался тяжелый денёк? Устали после учебы или работы? Не знаете, как поднять себе настроение или
+                развлечься? Начинайте <strong>смотреть фильмы </strong> на нашем портале! Интересное
+                кино всегда помогает расслабиться, получить заряд бодрости и позитива до конца дня.</p>
+            <p>Сегодня достаточно сложно представить нашу жизнь без кинематографа. Он охватывает практически все сферы
+                деятельности человека. Ему чуть больше века, однако, это искусство постоянно совершенствуется и меняется
+                в лучшую сторону.</p>
+            <p><img alt="фильмы онлайн" src="#"
+                    style="border-radius:10px; float:left; margin-right:10px">На сегодняшний день снимается такое
+                большое количество фильмов, что почти каждый день проходят премьеры по всему миру. Однако в
+                стремительном ритме современной жизни не у каждого есть возможность посещать кинотеатры для того, чтобы
+                насладиться просмотром желаемой кинокартины или познакомиться с новинкой, вышедшей недавно на большие
+                экраны. В данном случае прекрасной альтернативой является КиноКрад. Сегодня у нас можно смотреть лучшие
+                <strong>фильмы в хорошем качестве</strong>, не выходя из дома или офиса, и все это удовольствие доступно
+                без регистрации. Кинотека насчитывает огромное количество онлайн фильмов всевозможных жанров, как <a
+                        href="#">российского</a>, так и <a
+                        href="#">зарубежного</a> производства.</p>
+            <p>Представленные у нас картины заставят грустить или радоваться, заглянуть в будущее или вспомнить прошлое,
+                погрузят Вас в мир <a href="#">фантастики</a> и леденящих дух ужасов, а
+                так же помогут узнать много нового и интересного.</p>
+            <p>Хорошей идеей будет провести свободный вечер с любимым человеком за просмотром романтической драмы.
+                Собрать всех родственников можно на просмотр интересных семейных художественных <a
+                        href="#">фильмов 2020</a>. Мужчинам отлично подойдут детективы и триллеры. От
+                души повеселиться можно во время сеанса смешной <a href="#">комедии</a>.
+                Вместе с детьми можно посмотреть кино онлайн приключенческого жанра.</p>
+        </div>
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+
+
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

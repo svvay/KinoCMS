@@ -1,0 +1,39 @@
+{% extends 'movie/movies.html' %}
+{% load static %}
+
+{% block activemovies %}
+    {% csrf_token %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                {% for place in placard_list %}
+                    <div class="col-md-5" align="center">
+                        <div class="card mb-1 shadow-sm">
+                            <img src="{{ place.poster.url }}" class="img-fluid" align="center">
+                            <text x="50%" y="50%" fill="#eceeef"
+                                  dy=".3em"> {{ place.title }}</text>
+
+                            <div class="card-body">
+                                <p class="card-text"> {{ place.description|truncatechars_html:250 }} </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{{ place.get_absolute_url }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Бронировать </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"> {{ place.price_per_film }}
+                                            UAH
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock activemovies %}
+

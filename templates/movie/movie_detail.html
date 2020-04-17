@@ -1,0 +1,50 @@
+{% extends 'movie/movies.html' %}
+{% load static %}
+{% block film %}
+    {% csrf_token %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-10" align="center">
+                    <div class="card mb-1 shadow-sm">
+
+                        <img src="{{ movie.poster.url }}" class="img-fluid" align="center">
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em"> {{ movie.title }}</text>
+                        {##}
+                        {#                        <div class="img-movie-shots">#}
+                        {##}
+                        {#                                        ВЫвод кадров из фильма#}
+                        {#                            {% for image in movie.movishots_set.all %}#}
+                        {#                                <img src="{{ image.image.url }}" alt="{{ image.description }}" class="img-fluid"#}
+                        {#                                     align="center">#}
+                        {#                            {% endfor %}#}
+                        {#                        </div>#}
+
+
+                        <div class="card-body">
+                            <p class="card-text"> {{ movie.description }} </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-secondary"> {{ movie.price_per_film }} UAH
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock film %}
+
